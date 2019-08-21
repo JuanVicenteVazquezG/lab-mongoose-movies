@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 const express = require('express');
@@ -15,10 +16,10 @@ router.post('/', (req, res, next) => {
   const newCelebrity = new Celebrity({ name, occupation, cathphrase });
   newCelebrity.save()
     .then((aCelebrity) => {
-      res.redirect('celebrities/index');
+      res.redirect('/celebrities');
     })
     .catch((error) => {
-      console.log ('error')
+      console.log('error');
       res.render('celebrities/new');
     });
 });
@@ -26,7 +27,7 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
   Celebrity.find({})
     .then((theCelebrities) => {
-      res.render('celebrities/index', { theCelebrities });
+      res.render('celebrities', { theCelebrities });
     })
     .catch((error) => {
       next(error);
@@ -44,8 +45,5 @@ router.get('/:id', (req, res, next) => {
       next(error);
     });
 });
-
-
-
 
 module.exports = router;
