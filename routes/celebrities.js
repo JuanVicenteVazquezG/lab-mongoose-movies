@@ -7,20 +7,23 @@ const router = express.Router();
 
 const Celebrity = require('../models/celebrity.js');
 
+router.post('/:_id/delete', (res, req, next) => {
+  console.log(`Esto es lo que contiene req ${req.body}`);
+ // const { _id } = req.body;
+  // console.log('pepe');
+  // Celebrity.findByIdAndRemove(id)
+  //   .then(() => {
+  //     res.redirect('/celebrities');
+  //     console.log('Celebrity Removed');
+  //   })
+  //   .catch((error) => { next(error); });
+});
+
 router.get('/new', (req, res, next) => {
   res.render('celebrities/new');
 });
 
-router.post('/:id/delete', (res, req, next) =>{
-  const { id } = req.body;
-  console.log('ole');
-  Celebrity.findByIdAndRemove(req.body.id)
-    .then(() =>{
-      res.redirect('celebrities');
-      console.log('Celebrity Removed');
-    })
-    .catch((error) => { next(error); });
-});
+
 
 
 router.post('/', (req, res, next) => {
@@ -49,7 +52,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const { id } = req.params;
-  console.log(`la id es ${id}`);
   Celebrity.findById(id)
     .then((aCelebrity) => {
       res.render('celebrities/show', aCelebrity);
