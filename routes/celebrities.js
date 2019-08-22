@@ -11,6 +11,18 @@ router.get('/new', (req, res, next) => {
   res.render('celebrities/new');
 });
 
+router.post('/:id/delete', (res, req, next) =>{
+  const { id } = req.body;
+  console.log('ole');
+  Celebrity.findByIdAndRemove(req.body.id)
+    .then(() =>{
+      res.redirect('celebrities');
+      console.log('Celebrity Removed');
+    })
+    .catch((error) => { next(error); });
+});
+
+
 router.post('/', (req, res, next) => {
   const { name, occupation, cathphrase } = req.body;
   const newCelebrity = new Celebrity({ name, occupation, cathphrase });
@@ -23,6 +35,7 @@ router.post('/', (req, res, next) => {
       res.render('celebrities/new');
     });
 });
+
 
 router.get('/', (req, res, next) => {
   Celebrity.find({})
