@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 

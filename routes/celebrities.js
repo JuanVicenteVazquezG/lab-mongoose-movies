@@ -29,7 +29,7 @@ router.post('/', (req, res, next) => {
 router.get('/', (req, res, next) => {
   Celebrity.find({})
     .then((theCelebrities) => {
-      res.render('celebrities', { theCelebrities });
+      res.render('celebrities/index', { theCelebrities });
     })
     .catch((error) => {
       next(error);
@@ -61,16 +61,14 @@ router.get('/:id/edit', (req, res, next) => {
   const { id } = req.params;
   Celebrity.findOne({ _id: id })
     .then((aCelebrity) => {
-      console.log(`Personas encontradas para editar celebrity finded ${aCelebrity}`);
+      console.log(`celebrity finded ${aCelebrity}`);
       res.render('celebrities/edit', aCelebrity);
     })
     .catch((error) => { next(error); });
 });
 
 router.post('/:id', (req, res, next) => {
-  console.log('ya no se que hago');
   const { id } = req.params;
-  console.log(`El ID es ${id}`);
   const { name, occupation, catchPhrase } = req.body;
   Celebrity.update({ _id: id }, { $set: { name, occupation, catchPhrase } })
     .then((aCelebrity) => {

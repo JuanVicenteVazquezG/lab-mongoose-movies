@@ -13,6 +13,7 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const celebritiesRouter = require('./routes/celebrities');
+const moviesRouter = require('./routes/movies');
 
 const app = express();
 
@@ -32,8 +33,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/celebrities', celebritiesRouter);
+app.use('/movies', moviesRouter);
 
 mongoose.connect('mongodb://localhost/celebrity-project', {
+  keepAlive: true,
+  useNewUrlParser: true,
+  reconnectTries: Number.MAX_VALUE,
+});
+
+mongoose.connect('mongodb://localhost/movie-project', {
   keepAlive: true,
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE,

@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 
 const Movie = require('../models/movie');
 
-const dbName = 'Movie-project';
+const dbName = 'movie-project';
 
 mongoose.connect(`mongodb://localhost/${dbName}`);
 
@@ -25,7 +25,7 @@ const movie = [{
   plot: 'A manipulative woman and a roguish man conduct a turbulent romance during the American Civil War and Reconstruction periods.',
 }];
 
-Movie.create(Movie, (err) => {
+Movie.create(movie, (err) => {
   if (err) { throw (err); }
   console.log(`Created ${movie.length} movies`);
   mongoose.connection.close();
