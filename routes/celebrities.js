@@ -7,24 +7,9 @@ const router = express.Router();
 
 const Celebrity = require('../models/celebrity.js');
 
-router.post('/:_id/delete', (res, req, next) => {
-  console.log(`Esto es lo que contiene req ${req.body}`);
- // const { _id } = req.body;
-  // console.log('pepe');
-  // Celebrity.findByIdAndRemove(id)
-  //   .then(() => {
-  //     res.redirect('/celebrities');
-  //     console.log('Celebrity Removed');
-  //   })
-  //   .catch((error) => { next(error); });
-});
-
 router.get('/new', (req, res, next) => {
   res.render('celebrities/new');
 });
-
-
-
 
 router.post('/', (req, res, next) => {
   const { name, occupation, cathphrase } = req.body;
@@ -59,6 +44,36 @@ router.get('/:id', (req, res, next) => {
     .catch((error) => {
       next(error);
     });
+});
+
+router.post('/:id/delete', (req, res, next) => {
+  const { id } = req.params;
+  Celebrity.findByIdAndDelete(id)
+    .then(() => {
+      res.redirect('/celebrities');
+      console.log('Celebrity Removed');
+    })
+    .catch((error) => { next(error); });
+});
+
+router.get('/:id/edit', (req, res, next) => {
+  const { id } = req.params;
+  Celebrity.findOne({ _id: id })
+    .then((aCelebrity) => {
+      console.log('por fin hemos entrado');
+      res.render('celebrities/edit', aCelebrity);
+    })
+    .catch((error) => { next(error); });
+});
+
+router.post('/:id/edit', (req, res, next) => {
+  const { id } = req.params;
+  const { name, occupation, cathPhrase } = req.body;
+  Celebrity.findByIdAndUpdate({ _id: id }, { name, occupation, cathPhrase })
+    .then(() => {
+      res.redirect('/celebrities');
+    })
+    .catch((error) => { next(error); });
 });
 
 module.exports = router;
