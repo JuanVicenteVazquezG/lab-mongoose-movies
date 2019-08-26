@@ -7,13 +7,14 @@ const router = express.Router();
 
 const Celebrity = require('../models/celebrity.js');
 
+
 router.get('/new', (req, res, next) => {
   res.render('celebrities/new');
 });
 
 router.post('/', (req, res, next) => {
-  const { name, occupation, cathphrase } = req.body;
-  const newCelebrity = new Celebrity({ name, occupation, cathphrase });
+  const { name, occupation, catchPhrase } = req.body;
+  const newCelebrity = new Celebrity({ name, occupation, catchPhrase });
   newCelebrity.save()
     .then((aCelebrity) => {
       res.redirect('/celebrities');
@@ -60,18 +61,20 @@ router.get('/:id/edit', (req, res, next) => {
   const { id } = req.params;
   Celebrity.findOne({ _id: id })
     .then((aCelebrity) => {
-      console.log('por fin hemos entrado');
+      console.log(`Personas encontradas para editar celebrity finded ${aCelebrity}`);
       res.render('celebrities/edit', aCelebrity);
     })
     .catch((error) => { next(error); });
 });
 
-router.post('/:id/edit', (req, res, next) => {
+router.post('/:id', (req, res, next) => {
+  console.log('ya no se que hago');
   const { id } = req.params;
-  const { name, occupation, cathPhrase } = req.body;
-  Celebrity.findByIdAndUpdate({ _id: id }, { name, occupation, cathPhrase })
-    .then(() => {
-      res.redirect('/celebrities');
+  console.log(`El ID es ${id}`);
+  const { name, occupation, catchPhrase } = req.body;
+  Celebrity.update({ _id: id }, { $set: { name, occupation, catchPhrase } })
+    .then((aCelebrity) => {
+      res.redirect(id);
     })
     .catch((error) => { next(error); });
 });
